@@ -49,9 +49,6 @@ trait EntrustUserTrait
        else return $this->perms()->get();
      }
 
-    /**
-     * {@inheritDoc}
-     */
     public function save(array $options = [])
     {   //both inserts and updates
         if(Cache::getStore() instanceof TaggableStore) {
@@ -61,6 +58,7 @@ trait EntrustUserTrait
         if(Cache::getStore() instanceof TaggableStore) {
           Cache::tags(Config::get('entrust.user_permission_table'))->flush();
         }
+
         return parent::save($options);
     }
 
@@ -73,7 +71,7 @@ trait EntrustUserTrait
         if(Cache::getStore() instanceof TaggableStore) {
             Cache::tags(Config::get('entrust.role_user_table'))->flush();
         }
-        if (Cache::getStore() instanceof TaggableStore){
+        if (Cache::getStore() instanceof TaggableStore) {
             Cache::tags(Config::get('entrust.user_permission_table'))->flush();
         }
         return $result;
@@ -88,11 +86,14 @@ trait EntrustUserTrait
         if (Cache::getStore() instanceof TaggableStore) {
             Cache::tags(Config::get('entrust.role_user_table'))->flush();
         }
-        if (Cache::getStore() instanceof TaggableStore){
+        if (Cache::getStore() instanceof TaggableStore) {
             Cache::tags(Config::get('entrust.user_permission_table'))->flush();
         }
         return $result;
 
+	public function perms(){
+		return $this->belongsToMany(Config::get('entrust.permission'), Config::get('entrust.user_permission_table'), 'user_id', 'permission_id');
+	}
     /**
      * Many-to-Many relations with Role.
      *
@@ -170,6 +171,9 @@ trait EntrustUserTrait
         return false;
     }
 
+    public function hasPermission($permission,$requireAll=false){
+        return $this->can($permission,$requireAll);
+    }
     /**
      * Checks if the user has a permission by its name.
      *

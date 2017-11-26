@@ -130,7 +130,6 @@ return [
     */
     'permission_foreign_key' => 'permission_id',
 
-
     /*
     |--------------------------------------------------------------------------
     | Entrust user_permission Table
