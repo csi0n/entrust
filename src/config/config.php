@@ -129,4 +129,16 @@ return [
     |
     */
     'permission_foreign_key' => 'permission_id',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Entrust user_permission Table
+    |--------------------------------------------------------------------------
+    |
+    | This is the user_permission table used by Entrust to save relationship
+    | between permissions and users to the database.
+    |
+    */
+    'user_permission_table' =>  'user_permission',
 ];
